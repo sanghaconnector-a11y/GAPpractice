@@ -1,4 +1,1087 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>G.A.P. — Ground. Attune. Proceed.</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment:   #f3ecdc;
+    --parchment-2: #ede3cd;
+    --card:        #e8e0cb;
+    --moss:        #3f5738;
+    --moss-deep:   #2e4029;
+    --clay:        #a8703f;
+    --clay-soft:   #c08a5c;
+    --charcoal:    #2c2820;
+    --stone:       #8c8270;
+    --line:        #d4c9ac;
+    --sage-line:   #9fae8f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--parchment);
+    color: var(--charcoal);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .sans {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 2.4rem;
+    background: rgba(243,236,220,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transition: box-shadow 0.3s ease;
+  }
+  nav.scrolled { box-shadow: 0 2px 18px rgba(44,40,32,0.08); }
+
+  .nav-mark {
+    font-size: 0.85rem;
+    letter-spacing: 0.28em;
+    color: var(--moss);
+    font-weight: 700;
+  }
+
+  .nav-more {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay);
+    background: none;
+    border: 1px solid var(--clay-soft);
+    padding: 0.5rem 1.1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-more:hover { background: var(--clay); color: var(--parchment); }
+
+  /* ── SHARED SECTION SHELL ── */
+  section {
+    padding: 6rem 2rem 4.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--clay);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    padding-top: 8.5rem;
+    text-align: left;
+    position: relative;
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 13vw, 8.5rem);
+    color: var(--moss);
+    font-weight: 700;
+    line-height: 0.95;
+    margin: 1.4rem 0 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-title .dot { color: var(--clay); }
+
+  .hero-sub {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-style: italic;
+    color: var(--stone);
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-body {
+    font-size: 1.06rem;
+    max-width: 560px;
+    opacity: 0.86;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  .tap-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 2.2rem;
+  }
+  .tap-arrow {
+    color: var(--clay);
+    animation: tapNudge 2.2s ease-in-out infinite;
+  }
+  @keyframes tapNudge {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50%       { transform: translateY(5px); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tap-arrow { animation: none; }
+  }
+
+  /* breathing rings ambient */
+  .hero-rings {
+    position: absolute;
+    right: -60px;
+    top: 6rem;
+    width: 320px;
+    height: 320px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+  @media (max-width: 800px) { .hero-rings { display: none; } }
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(63,87,56,0.35);
+    top: 50%; left: 50%;
+    width: 60px; height: 60px;
+    margin: -30px 0 0 -30px;
+    animation: ringGrow 9s ease-in-out infinite;
+  }
+  .hero-ring:nth-child(2) { animation-delay: -3s; }
+  .hero-ring:nth-child(3) { animation-delay: -6s; }
+  @keyframes ringGrow {
+    0%   { transform: scale(0.3); opacity: 0; }
+    15%  { opacity: 0.5; }
+    100% { transform: scale(5.2); opacity: 0; }
+  }
+
+  /* ── PRACTICE PATH ── */
+  #path {
+    padding-top: 3rem;
+  }
+
+  .path-intro {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--stone);
+    max-width: 600px;
+    margin: 1.2rem 0 3.5rem;
+    line-height: 1.75;
+  }
+
+  .path-row {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    column-gap: 1.6rem;
+  }
+
+  .path-line-col {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .path-line-col svg { position: absolute; top: 0; left: 0; width: 46px; height: 100%; }
+
+  .step {
+    padding: 1rem 1.1rem 3.4rem;
+    margin: 0 -1.1rem;
+    border-radius: 6px;
+    transition: background 0.25s ease;
+  }
+  .step:last-child { padding-bottom: 1rem; }
+  .step:hover { background: rgba(63,87,56,0.05); }
+  @media (max-width: 640px) {
+    .step { margin: 0 -0.6rem; padding: 0.8rem 0.6rem 3rem; }
+  }
+
+  .step-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    font-family: Georgia, serif;
+    padding: 0.3rem 0;
+  }
+
+  .step-word {
+    font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+    font-weight: 700;
+    color: var(--moss);
+    transition: color 0.2s ease;
+  }
+  .step-trigger:hover .step-word,
+  .step-trigger[aria-expanded="true"] .step-word { color: var(--clay); }
+
+  .step-gloss {
+    font-size: 1.02rem;
+    font-style: italic;
+    color: var(--clay);
+    opacity: 0.85;
+  }
+
+  .step-lede {
+    font-size: 0.98rem;
+    max-width: 560px;
+    opacity: 0.85;
+    margin-top: 0.7rem;
+    line-height: 1.8;
+  }
+
+  .step-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--moss);
+    background: none;
+    border: 1px solid var(--moss);
+    border-radius: 20px;
+    padding: 0.5rem 1.1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .step-cta:hover { background: var(--moss); color: var(--parchment); }
+  .step-cta::after {
+    content: '↓';
+    display: inline-block;
+    transition: transform 0.25s ease;
+  }
+  .step-cta[aria-expanded="true"]::after { transform: rotate(180deg); }
+
+  /* practice panel (expand) */
+  .practice-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s ease;
+  }
+  .practice-panel.open { max-height: 1400px; }
+
+  .practice-inner {
+    background: var(--card);
+    border-left: 3px solid var(--moss);
+    border-radius: 3px;
+    padding: 1.8rem 1.9rem;
+    margin-top: 1.3rem;
+  }
+
+  .practice-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .practice-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--moss-deep);
+    margin-bottom: 0.9rem;
+  }
+
+  .practice-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.1rem;
+  }
+  .practice-steps li {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.94rem;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+  .practice-steps .num {
+    flex-shrink: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--moss);
+    color: var(--parchment);
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    margin-top: 0.15rem;
+  }
+
+  .practice-footnote {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--stone);
+    border-top: 1px solid var(--line);
+    padding-top: 0.9rem;
+  }
+
+  /* Ground breathing widget */
+  .breath-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.6rem 0 1.4rem;
+    padding: 1.6rem 1rem;
+    background: rgba(243,236,220,0.6);
+    border-radius: 4px;
+  }
+  .breath-circle {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--sage-line), var(--moss));
+    transform: scale(0.62);
+    transition: transform 3.6s ease-in-out;
+  }
+  .breath-circle.inhale { transform: scale(1.05); transition-duration: 1.8s; }
+  .breath-circle.hold    { transform: scale(1.05); transition-duration: 0.4s; }
+  .breath-circle.exhale  { transform: scale(0.62); transition-duration: 2.4s; }
+
+  .breath-cue {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--moss-deep);
+    min-height: 1.2em;
+  }
+  .breath-count {
+    font-size: 0.72rem;
+    color: var(--stone);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .breath-btn {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--moss);
+    border: none;
+    padding: 0.55rem 1.3rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .breath-btn:hover { background: var(--moss-deep); }
+  .breath-btn:disabled { opacity: 0.5; cursor: default; }
+
+  /* Attune / Proceed step-through widget */
+  .walk-widget {
+    background: rgba(243,236,220,0.6);
+    border-radius: 4px;
+    padding: 1.5rem 1.3rem;
+    margin: 0.6rem 0 1.3rem;
+  }
+  .walk-count {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 0.7rem;
+  }
+  .walk-prompt {
+    font-size: 1.04rem;
+    font-style: italic;
+    color: var(--charcoal);
+    min-height: 3.2em;
+    line-height: 1.65;
+    margin-bottom: 1.1rem;
+  }
+  .walk-controls {
+    display: flex;
+    gap: 0.7rem;
+  }
+  .walk-btn {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--moss);
+    color: var(--moss);
+    padding: 0.5rem 1.1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .walk-btn:hover:not(:disabled) { background: var(--moss); color: var(--parchment); }
+  .walk-btn:disabled { opacity: 0.35; cursor: default; }
+  .walk-btn.primary { background: var(--moss); color: var(--parchment); }
+  .walk-btn.primary:hover { background: var(--moss-deep); }
+
+  /* ── APPLICATION ── */
+  #application {
+    padding-top: 2rem;
+  }
+
+  .app-card {
+    background: var(--card);
+    border-left: 3px solid var(--moss);
+    border-radius: 3px;
+    padding: 2.2rem 2.1rem;
+  }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.4rem;
+  }
+  @media (max-width: 640px) { .app-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+  .app-col h3 {
+    font-size: 1.02rem;
+    color: var(--clay);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .app-col p {
+    font-size: 0.93rem;
+    opacity: 0.86;
+    line-height: 1.75;
+  }
+  .app-divider {
+    border-top: 1px solid var(--line);
+    margin: 1.8rem 0 1.3rem;
+  }
+  .app-close {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--moss-deep);
+    opacity: 0.85;
+    text-align: center;
+  }
+
+  /* ── CLOSE / MORE PRACTICE CTA ── */
+  #close-cta {
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+  }
+  .close-line {
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+    font-style: italic;
+    color: var(--stone);
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+  .close-btn {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--clay);
+    border: none;
+    padding: 0.85rem 2.1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .close-btn:hover { background: #8f5c33; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--parchment-2);
+    text-align: center;
+    padding: 2.2rem 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--stone);
+    border-top: 1px solid var(--line);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ── MODAL (More Practice) ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44,40,32,0.62);
+    backdrop-filter: blur(5px);
+    z-index: 200;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4.5rem 1.2rem 2rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-overlay.open.visible { opacity: 1; }
+
+  .modal {
+    background: var(--parchment);
+    border-radius: 4px;
+    max-width: 640px;
+    width: 100%;
+    padding: 2.4rem 2.2rem 2.6rem;
+    position: relative;
+    transform: translateY(14px);
+    transition: transform 0.28s ease;
+  }
+  .modal-overlay.open.visible .modal { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 1.1rem; right: 1.2rem;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--stone);
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--charcoal); }
+
+  .modal h2 {
+    font-size: 1.6rem;
+    color: var(--moss);
+    margin-bottom: 0.4rem;
+  }
+  .modal-sub {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--stone);
+    margin-bottom: 1.8rem;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--line);
+  }
+  .accordion-item:first-of-type { border-top: 1px solid var(--line); }
+
+  .accordion-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 0.2rem;
+    font-family: Georgia, serif;
+  }
+  .accordion-num {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.7rem;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    margin-right: 0.7rem;
+  }
+  .accordion-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--moss-deep);
+  }
+  .accordion-plus {
+    font-size: 1.1rem;
+    color: var(--clay);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+  .accordion-trigger[aria-expanded="true"] .accordion-plus { transform: rotate(45deg); }
+
+  .accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .accordion-panel.open { max-height: 600px; }
+  .accordion-panel-inner {
+    padding: 0 0.2rem 1.3rem 2.2rem;
+    font-size: 0.92rem;
+    opacity: 0.87;
+    line-height: 1.8;
+  }
+  .accordion-panel-inner ol,
+  .accordion-panel-inner ul {
+    margin: 0.6rem 0 0.4rem 1.1rem;
+  }
+  .accordion-panel-inner li { margin-bottom: 0.4rem; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero-ring { animation: none; opacity: 0.15; }
+    .breath-circle { transition: none; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0.8rem 1.2rem; }
+    section { padding: 4.5rem 1.3rem 3.5rem; }
+    #hero { padding-top: 6.5rem; }
+    .path-row { grid-template-columns: 30px 1fr; column-gap: 1rem; }
+    .path-line-col svg { width: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <span class="nav-mark">G · A · P</span>
+  <button class="nav-more" onclick="openOverlay('moreModal')">More Practice</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-rings" aria-hidden="true">
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+  </div>
+  <p class="eyebrow">A practice for meeting life</p>
+  <h1 class="hero-title">G.A.P<span class="dot">.</span></h1>
+  <p class="hero-sub">Ground. Attune. Proceed.</p>
+  <p class="hero-body">One practice, three entries — for the moments life demands a decision, and the moments life simply asks to be met. Each word below opens into something you can do right now, drawn from contemplative traditions and grounded in how the nervous system actually settles.</p>
+</section>
+
+<!-- PRACTICE PATH -->
+<section id="path">
+  <p class="eyebrow reveal">the practice</p>
+  <p class="path-intro reveal reveal-delay-1">G.A.P. is not a technique to master once. It is a small door you can walk through many times a day — before a hard conversation, in the middle of a spiral, or simply to come back to yourself.</p>
+
+  <div class="tap-hint reveal reveal-delay-1">
+    <span>Tap a word to begin</span>
+    <svg class="tap-arrow" width="16" height="22" viewBox="0 0 16 22" aria-hidden="true">
+      <path d="M8,1 L8,18" stroke="currentColor" stroke-width="1.4" fill="none"/>
+      <path d="M2,13 L8,19 L14,13" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="path-row">
+    <div class="path-line-col">
+      <svg viewBox="0 0 46 720" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M23,20 C23,120 5,160 23,260 C41,360 5,420 23,520 C41,620 23,650 23,700"
+              fill="none" stroke="#9fae8f" stroke-width="1.4" />
+        <circle cx="23" cy="20" r="6" fill="#3f5738" />
+        <circle cx="23" cy="270" r="5.5" fill="#a8703f" />
+        <circle cx="23" cy="700" r="6" fill="#3f5738" />
+      </svg>
+    </div>
+    <div>
+
+      <!-- GROUND -->
+      <div class="step reveal">
+        <button class="step-trigger" aria-expanded="false" onclick="toggleStep(this,'ground-panel')">
+          <span class="step-word">Ground</span>
+          <span class="step-gloss">the still point</span>
+        </button>
+        <p class="step-lede">Unhooking from thought and emotion. A sense of being where you are — before anything is decided or acted on.</p>
+        <button class="step-cta" onclick="toggleStep(null,'ground-panel')">Learn the practice</button>
+        <div class="practice-panel" id="ground-panel">
+          <div class="practice-inner">
+            <p class="practice-label">Practice</p>
+            <p class="practice-title">The Three-Part Breath</p>
+            <div class="breath-widget">
+              <div class="breath-circle" id="breathCircle"></div>
+              <p class="breath-cue" id="breathCue">Press begin when ready</p>
+              <p class="breath-count" id="breathCount">0 of 5 rounds</p>
+              <button class="breath-btn" id="breathBtn" onclick="startBreathing()">Begin</button>
+            </div>
+            <ul class="practice-steps">
+              <li><span class="num">1</span> Two inhales through the nose — the first fills the belly and chest, the second tops you off completely. No pause between them.</li>
+              <li><span class="num">2</span> One long, open-mouth exhale — let the breath fall out entirely, with a sigh if it wants one.</li>
+              <li><span class="num">3</span> Repeat for five to eight rounds, or until something in the body visibly settles.</li>
+            </ul>
+            <p class="practice-footnote">The double inhale is borrowed from the "physiological sigh," shown to lower arousal faster than a single slow breath by more fully re-inflating collapsed lung tissue before the release.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ATTUNE -->
+      <div class="step reveal reveal-delay-1">
+        <button class="step-trigger" aria-expanded="false" onclick="toggleStep(this,'attune-panel')">
+          <span class="step-word">Attune</span>
+          <span class="step-gloss">the felt sense</span>
+        </button>
+        <p class="step-lede">Turning toward the body and the immediate space around you, without labeling or conceptualizing — as sources of information, not distraction.</p>
+        <button class="step-cta" onclick="toggleStep(null,'attune-panel')">Learn the practice</button>
+        <div class="practice-panel" id="attune-panel">
+          <div class="practice-inner">
+            <p class="practice-label">Practice</p>
+            <p class="practice-title">A Fuller Sensory Pass</p>
+            <div class="walk-widget" data-widget="attune">
+              <p class="walk-count" id="attune-count">1 of 6</p>
+              <p class="walk-prompt" id="attune-prompt"></p>
+              <div class="walk-controls">
+                <button class="walk-btn" id="attune-back" onclick="walkStep('attune',-1)">Back</button>
+                <button class="walk-btn primary" id="attune-next" onclick="walkStep('attune',1)">Next</button>
+              </div>
+            </div>
+            <p class="practice-footnote">This moves slower and wider than a typical five-senses check-in — the aim isn't to name things quickly, but to actually feel each one before moving on. Interoceptive attention like this is associated with better emotion regulation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROCEED -->
+      <div class="step reveal reveal-delay-2">
+        <button class="step-trigger" aria-expanded="false" onclick="toggleStep(this,'proceed-panel')">
+          <span class="step-word">Proceed</span>
+          <span class="step-gloss">the response</span>
+        </button>
+        <p class="step-lede">Acting, deciding, and moving with life — from the wisdom recognized in Ground and Attune, not the mind's habitual reflex.</p>
+        <button class="step-cta" onclick="toggleStep(null,'proceed-panel')">Learn the practice</button>
+        <div class="practice-panel" id="proceed-panel">
+          <div class="practice-inner">
+            <p class="practice-label">Practice</p>
+            <p class="practice-title">The Felt-Sense Check</p>
+            <div class="walk-widget" data-widget="proceed">
+              <p class="walk-count" id="proceed-count">1 of 5</p>
+              <p class="walk-prompt" id="proceed-prompt"></p>
+              <div class="walk-controls">
+                <button class="walk-btn" id="proceed-back" onclick="walkStep('proceed',-1)">Back</button>
+                <button class="walk-btn primary" id="proceed-next" onclick="walkStep('proceed',1)">Next</button>
+              </div>
+            </div>
+            <p class="practice-footnote">Adapted from Eugene Gendlin's Focusing method — asking the body for a "felt sense" of a decision before the mind argues for it. Studied for decades as a way of accessing implicit, pre-verbal knowing.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION -->
+<section id="application">
+  <p class="eyebrow reveal">application</p>
+  <div class="app-card reveal reveal-delay-1">
+    <div class="app-grid">
+      <div class="app-col">
+        <h3>As a decision compass</h3>
+        <p>Ground with the breath. Attune to what the moment, the body, and the situation are showing you. Proceed into the choice from that settled place.</p>
+      </div>
+      <div class="app-col">
+        <h3>As a daily practice</h3>
+        <p>Ground in the body and the space around you. Attune without naming what you find. Proceed by moving fluidly with life — not toward the habitual escape.</p>
+      </div>
+    </div>
+    <div class="app-divider"></div>
+    <p class="app-close">Building the skill of intentional connection and response in day-to-day life.</p>
+  </div>
+</section>
+
+<!-- CLOSE / CTA -->
+<section id="close-cta">
+  <p class="close-line reveal">Three words. One doorway. Come back to it as often as you need — there is no version of this you can get wrong.</p>
+  <button class="close-btn reveal reveal-delay-1" onclick="openOverlay('moreModal')">Explore more practice</button>
+</section>
+
+<footer>
+  G · A · P — a practice for meeting life
+</footer>
+
+<!-- MODAL: MORE PRACTICE -->
+<div class="modal-overlay" id="moreModal" role="dialog" aria-modal="true" aria-label="More Practice">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOverlay('moreModal')" aria-label="Close">×</button>
+    <h2>More Practice</h2>
+    <p class="modal-sub">Five ways to deepen what Ground, Attune, and Proceed already point toward.</p>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-1')">
+        <span><span class="accordion-num">01</span><span class="accordion-title">Mindfulness Meditation</span></span>
+        <span class="accordion-plus">+</span>
+      </button>
+      <div class="accordion-panel" id="acc-1">
+        <div class="accordion-panel-inner">
+          <p>A simple anchor-breath sit, the root practice underneath Ground.</p>
+          <ol>
+            <li>Sit comfortably. Let your eyes close or soften toward the floor.</li>
+            <li>Pick one anchor — the breath at the nostrils, or the rise and fall of the belly.</li>
+            <li>When the mind wanders, simply notice "thinking" and return to the anchor. This is the whole practice, not a failure of it.</li>
+            <li>Begin with five minutes. Let the duration grow on its own.</li>
+          </ol>
+          <p>This is the same attentional training studied in mindfulness-based stress reduction (MBSR), with consistent evidence for reducing rumination and reactivity over time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-2')">
+        <span><span class="accordion-num">02</span><span class="accordion-title">Somatic Awareness — Body Scan</span></span>
+        <span class="accordion-plus">+</span>
+      </button>
+      <div class="accordion-panel" id="acc-2">
+        <div class="accordion-panel-inner">
+          <p>A slow pass through the body, deepening what Attune began.</p>
+          <ol>
+            <li>Lie down or sit reclined. Begin at the feet.</li>
+            <li>Move attention slowly upward — feet, legs, pelvis, belly, chest, hands, arms, shoulders, neck, face.</li>
+            <li>At each area, just notice what is there — warmth, tension, tingling, nothing at all. No need to change it.</li>
+            <li>If tension is strong somewhere, you can breathe into it gently before moving on.</li>
+          </ol>
+          <p>Alternative — body tapping: use fingertips to lightly tap down the arms, chest, and legs. This can be more accessible than stillness for a body that's activated or numbed out.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-3')">
+        <span><span class="accordion-num">03</span><span class="accordion-title">Box Breathing</span></span>
+        <span class="accordion-plus">+</span>
+      </button>
+      <div class="accordion-panel" id="acc-3">
+        <div class="accordion-panel-inner">
+          <p>A second breath tool, distinct from the three-part breath — useful when you need steadiness more than release.</p>
+          <ol>
+            <li>Inhale through the nose for a count of four.</li>
+            <li>Hold gently for a count of four.</li>
+            <li>Exhale through the nose for a count of four.</li>
+            <li>Hold empty for a count of four. Repeat for four to eight rounds.</li>
+          </ol>
+          <p>Used widely in clinical anxiety protocols and by high-stress professions to down-regulate the nervous system through slow, even-paced breathing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-4')">
+        <span><span class="accordion-num">04</span><span class="accordion-title">Personal Inquiry Practice</span></span>
+        <span class="accordion-plus">+</span>
+      </button>
+      <div class="accordion-panel" id="acc-4">
+        <div class="accordion-panel-inner">
+          <p>A quiet self-inquiry, for when a feeling or belief keeps returning.</p>
+          <ol>
+            <li>Name what's present in a single honest sentence — "I feel ___" or "I believe ___."</li>
+            <li>Ask: is this absolutely true? Sit with the question rather than rushing to answer.</li>
+            <li>Ask: who or how would I be without this thought?</li>
+            <li>Let the inquiry stay open. Insight here tends to arrive sideways, not on command.</li>
+          </ol>
+          <p>This draws on contemplative self-inquiry traditions and cognitive defusion work — loosening identification with a thought without needing to argue it away.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-5')">
+        <span><span class="accordion-num">05</span><span class="accordion-title">Living It Harmoniously</span></span>
+        <span class="accordion-plus">+</span>
+      </button>
+      <div class="accordion-panel" id="acc-5">
+        <div class="accordion-panel-inner">
+          <p>How Attune and Proceed become one continuous motion, rather than two separate steps.</p>
+          <ol>
+            <li>Set a few natural check-in points in your day — before opening your laptop, at a stoplight, before a meal.</li>
+            <li>At each, take one physiological sigh and notice one thing in the body or the room.</li>
+            <li>Let whatever you do next simply follow from that — no analysis required.</li>
+            <li>Over time this collapses Ground, Attune, and Proceed into a single felt movement, rather than three distinct stops.</li>
+          </ol>
+          <p>This is the long-run aim of the framework — not a technique you perform, but a way of meeting each moment that becomes more automatic with repetition.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* ── Nav shadow ── */
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* ── Scroll reveal ── */
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function (el) { revealObserver.observe(el); });
+
+  /* ── Step (Ground/Attune/Proceed) expand ── */
+  function toggleStep(trigger, panelId) {
+    var panel = document.getElementById(panelId);
+    var isOpen = panel.classList.contains('open');
+    var nowOpen = !isOpen;
+    panel.classList.toggle('open', nowOpen);
+    var step = panel.closest('.step');
+    step.querySelectorAll('.step-trigger, .step-cta').forEach(function (el) {
+      el.setAttribute('aria-expanded', String(nowOpen));
+    });
+    if (nowOpen) {
+      setTimeout(function () {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 150);
+    }
+  }
+
+  /* ── Accordion (More Practice modal) ── */
+  function toggleAccordion(trigger, panelId) {
+    var panel = document.getElementById(panelId);
+    var isOpen = panel.classList.contains('open');
+    panel.classList.toggle('open', !isOpen);
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+  }
+
+  /* ── Modal open/close ── */
+  function openOverlay(id) {
+    var el = document.getElementById(id);
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { el.classList.add('visible'); });
+    });
+  }
+  function closeOverlay(id) {
+    var el = document.getElementById(id);
+    el.classList.remove('visible');
+    setTimeout(function () {
+      el.classList.remove('open');
+      document.body.style.overflow = '';
+    }, 250);
+  }
+  document.getElementById('moreModal').addEventListener('click', function (e) {
+    if (e.target === this) closeOverlay('moreModal');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.getElementById('moreModal').classList.contains('open')) {
+      closeOverlay('moreModal');
+    }
+  });
+
+  /* ── Ground: three-part breath animation ── */
+  var breathRunning = false;
+  var breathRoundsTarget = 5;
+  function startBreathing() {
+    if (breathRunning) return;
+    breathRunning = true;
+    var btn = document.getElementById('breathBtn');
+    var circle = document.getElementById('breathCircle');
+    var cue = document.getElementById('breathCue');
+    var count = document.getElementById('breathCount');
+    btn.disabled = true;
+    btn.textContent = 'In progress…';
+    var round = 0;
+
+    function doRound() {
+      if (round >= breathRoundsTarget) {
+        cue.textContent = 'Well done. Rest here as long as you like.';
+        count.textContent = breathRoundsTarget + ' of ' + breathRoundsTarget + ' rounds';
+        btn.disabled = false;
+        btn.textContent = 'Begin again';
+        breathRunning = false;
+        return;
+      }
+      round++;
+      count.textContent = round + ' of ' + breathRoundsTarget + ' rounds';
+
+      cue.textContent = 'Inhale through the nose…';
+      circle.className = 'breath-circle inhale';
+
+      setTimeout(function () {
+        cue.textContent = 'Inhale again — fill up completely…';
+        circle.className = 'breath-circle hold';
+      }, 1800);
+
+      setTimeout(function () {
+        cue.textContent = 'Let it all go through an open mouth…';
+        circle.className = 'breath-circle exhale';
+      }, 2500);
+
+      setTimeout(doRound, 5200);
+    }
+    doRound();
+  }
+
+  /* ── Attune / Proceed step-through widgets ── */
+  var walkData = {
+    attune: [
+      "Notice what you can see right now — not naming objects quickly, but letting your eyes actually land and rest on one or two things.",
+      "Notice what you can hear — the nearest sound, then the farthest one you can find.",
+      "Notice a texture within reach — the chair, the floor, your own hands. Let yourself actually feel it.",
+      "Notice your feet or seat making contact with the ground beneath you.",
+      "Notice your breath, without changing it — just where you feel it moving.",
+      "Notice one sensation inside the body — tightness, warmth, ease, heaviness — and simply let it be information, not a problem to solve."
+    ],
+    proceed: [
+      "Bring the decision or situation to mind, lightly — not analyzing it, just letting it be present.",
+      "Ask the body, not the mind: where do I feel this? Chest, stomach, throat, shoulders — wherever it shows up.",
+      "Stay with that sensation for a few breaths without rushing to interpret it. Let it shift or clarify on its own.",
+      "Ask quietly: what does this part of me actually want? Let the answer come as a felt sense, not a sentence.",
+      "From whatever settled or became clearer, take one small, concrete next step — the smallest honest action available."
+    ]
+  };
+  var walkIndex = { attune: 0, proceed: 0 };
+
+  function renderWalk(key) {
+    var i = walkIndex[key];
+    var data = walkData[key];
+    document.getElementById(key + '-prompt').textContent = data[i];
+    document.getElementById(key + '-count').textContent = (i + 1) + ' of ' + data.length;
+    document.getElementById(key + '-back').disabled = (i === 0);
+    var nextBtn = document.getElementById(key + '-next');
+    nextBtn.textContent = (i === data.length - 1) ? 'Restart' : 'Next';
+  }
+
+  function walkStep(key, dir) {
+    var data = walkData[key];
+    if (dir === 1 && walkIndex[key] === data.length - 1) {
+      walkIndex[key] = 0;
+    } else {
+      walkIndex[key] = Math.min(Math.max(walkIndex[key] + dir, 0), data.length - 1);
+    }
+    renderWalk(key);
+  }
+
+  renderWalk('attune');
+  renderWalk('proceed');
+</script>
+
+</body>
+</html><<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
