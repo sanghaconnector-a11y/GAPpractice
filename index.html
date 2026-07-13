@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#f3ecdc">
 <title>G.A.P. — Ground. Attune. Proceed.</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+    color-scheme: light only;
     --parchment:   #f3ecdc;
     --parchment-2: #ede3cd;
     --card:        #e8e0cb;
@@ -21,11 +24,16 @@
     --sage-line:   #9fae8f;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    background: #f3ecdc;
+  }
 
   body {
     font-family: Georgia, 'Times New Roman', serif;
+    background: #f3ecdc;
     background: var(--parchment);
+    color: #2c2820;
     color: var(--charcoal);
     line-height: 1.6;
     overflow-x: hidden;
@@ -319,6 +327,9 @@
   .practice-header .practice-title { margin-bottom: 0; }
 
   .tool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 0.64rem;
     letter-spacing: 0.09em;
@@ -334,6 +345,7 @@
     transition: background 0.2s ease, color 0.2s ease;
   }
   .tool-btn:hover { background: var(--clay); color: var(--parchment); }
+  .tool-btn svg { flex-shrink: 0; }
 
   .practice-tools {
     display: flex;
@@ -741,7 +753,7 @@
   <p class="eyebrow">A practice for meeting life</p>
   <h1 class="hero-title">G.A.P<span class="dot">.</span></h1>
   <p class="hero-sub">Ground. Attune. Proceed.</p>
-  <p class="hero-body">One practice, three ways in — for the moments that call for a decision, and the ones that simply ask to be met. Tap any word below and begin.</p>
+  <p class="hero-body">One practice, three ways in — for the moments that call for a decision, and the ones that simply ask to be met. Come as you are; the practice already knows how to meet you there.</p>
 </section>
 
 <!-- PRACTICE PATH -->
@@ -784,7 +796,10 @@
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="ground-title">The Three-Part Breath</p>
               </div>
-              <button class="tool-btn" onclick="shufflePractice('ground')">🔀 New practice</button>
+              <button class="tool-btn" onclick="shufflePractice('ground')">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
+                New practice
+              </button>
             </div>
             <div class="breath-widget">
               <div class="breath-circle" id="breathCircle"></div>
@@ -813,7 +828,10 @@
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="attune-title">A Fuller Sensory Pass</p>
               </div>
-              <button class="tool-btn" onclick="shufflePractice('attune')">🔀 New practice</button>
+              <button class="tool-btn" onclick="shufflePractice('attune')">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
+                New practice
+              </button>
             </div>
             <div class="walk-widget" data-widget="attune">
               <p class="walk-count" id="attune-count">1 of 6</p>
@@ -852,7 +870,10 @@
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="proceed-title">The Felt-Sense Check</p>
               </div>
-              <button class="tool-btn" onclick="shufflePractice('proceed')">🔀 New practice</button>
+              <button class="tool-btn" onclick="shufflePractice('proceed')">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
+                New practice
+              </button>
             </div>
             <div class="walk-widget" data-widget="proceed">
               <p class="walk-count" id="proceed-count">1 of 5</p>
