@@ -282,7 +282,7 @@
     overflow: hidden;
     transition: max-height 0.45s ease;
   }
-  .practice-panel.open { max-height: 1400px; }
+  .practice-panel.open { max-height: 1800px; }
 
   .practice-inner {
     background: var(--card);
@@ -302,11 +302,44 @@
     margin-bottom: 0.5rem;
   }
 
+  .practice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
   .practice-title {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--moss-deep);
     margin-bottom: 0.9rem;
+  }
+  .practice-header .practice-title { margin-bottom: 0; }
+
+  .tool-btn {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--clay-soft);
+    color: var(--clay);
+    padding: 0.42rem 0.85rem;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .tool-btn:hover { background: var(--clay); color: var(--parchment); }
+
+  .practice-tools {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 0.2rem 0 1.1rem;
   }
 
   .practice-steps {
@@ -314,7 +347,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    margin-bottom: 1.1rem;
+    margin: 0.9rem 0 1.1rem;
   }
   .practice-steps li {
     display: flex;
@@ -377,6 +410,7 @@
     text-transform: uppercase;
     color: var(--moss-deep);
     min-height: 1.2em;
+    text-align: center;
   }
   .breath-count {
     font-size: 0.72rem;
@@ -443,6 +477,34 @@
   .walk-btn:disabled { opacity: 0.35; cursor: default; }
   .walk-btn.primary { background: var(--moss); color: var(--parchment); }
   .walk-btn.primary:hover { background: var(--moss-deep); }
+
+  /* Write-in box */
+  .write-box {
+    margin: 0.2rem 0 0.2rem;
+  }
+  .write-box textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+    font-style: italic;
+    color: var(--charcoal);
+    background: rgba(243,236,220,0.75);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.9rem 1rem;
+    line-height: 1.65;
+  }
+  .write-box textarea:focus {
+    outline: none;
+    border-color: var(--moss);
+  }
+  .write-box-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.7rem;
+  }
 
   /* ── APPLICATION ── */
   #application {
@@ -658,6 +720,7 @@
     #hero { padding-top: 6.5rem; }
     .path-row { grid-template-columns: 30px 1fr; column-gap: 1rem; }
     .path-line-col svg { width: 30px; }
+    .practice-header { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
   }
 </style>
 </head>
@@ -678,7 +741,7 @@
   <p class="eyebrow">A practice for meeting life</p>
   <h1 class="hero-title">G.A.P<span class="dot">.</span></h1>
   <p class="hero-sub">Ground. Attune. Proceed.</p>
-  <p class="hero-body">One practice, three entries — for the moments life demands a decision, and the moments life simply asks to be met. Each word below opens into something you can do right now, drawn from contemplative traditions and grounded in how the nervous system actually settles.</p>
+  <p class="hero-body">One practice, three ways in — for the moments that call for a decision, and the ones that simply ask to be met. Tap any word below and begin.</p>
 </section>
 
 <!-- PRACTICE PATH -->
@@ -687,7 +750,7 @@
   <p class="path-intro reveal reveal-delay-1">G.A.P. is not a technique to master once. It is a small door you can walk through many times a day — before a hard conversation, in the middle of a spiral, or simply to come back to yourself.</p>
 
   <div class="tap-hint reveal reveal-delay-1">
-    <span>Tap a word to begin</span>
+    <span>Tap to begin</span>
     <svg class="tap-arrow" width="16" height="22" viewBox="0 0 16 22" aria-hidden="true">
       <path d="M8,1 L8,18" stroke="currentColor" stroke-width="1.4" fill="none"/>
       <path d="M2,13 L8,19 L14,13" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -716,20 +779,21 @@
         <button class="step-cta" onclick="toggleStep(null,'ground-panel')">Learn the practice</button>
         <div class="practice-panel" id="ground-panel">
           <div class="practice-inner">
-            <p class="practice-label">Practice</p>
-            <p class="practice-title">The Three-Part Breath</p>
+            <div class="practice-header">
+              <div>
+                <p class="practice-label">Practice</p>
+                <p class="practice-title" id="ground-title">The Three-Part Breath</p>
+              </div>
+              <button class="tool-btn" onclick="shufflePractice('ground')">🔀 New practice</button>
+            </div>
             <div class="breath-widget">
               <div class="breath-circle" id="breathCircle"></div>
               <p class="breath-cue" id="breathCue">Press begin when ready</p>
               <p class="breath-count" id="breathCount">0 of 5 rounds</p>
               <button class="breath-btn" id="breathBtn" onclick="startBreathing()">Begin</button>
             </div>
-            <ul class="practice-steps">
-              <li><span class="num">1</span> Two inhales through the nose — the first fills the belly and chest, the second tops you off completely. No pause between them.</li>
-              <li><span class="num">2</span> One long, open-mouth exhale — let the breath fall out entirely, with a sigh if it wants one.</li>
-              <li><span class="num">3</span> Repeat for five to eight rounds, or until something in the body visibly settles.</li>
-            </ul>
-            <p class="practice-footnote">The double inhale is borrowed from the "physiological sigh," shown to lower arousal faster than a single slow breath by more fully re-inflating collapsed lung tissue before the release.</p>
+            <ul class="practice-steps" id="ground-steps"></ul>
+            <p class="practice-footnote" id="ground-footnote"></p>
           </div>
         </div>
       </div>
@@ -744,17 +808,31 @@
         <button class="step-cta" onclick="toggleStep(null,'attune-panel')">Learn the practice</button>
         <div class="practice-panel" id="attune-panel">
           <div class="practice-inner">
-            <p class="practice-label">Practice</p>
-            <p class="practice-title">A Fuller Sensory Pass</p>
+            <div class="practice-header">
+              <div>
+                <p class="practice-label">Practice</p>
+                <p class="practice-title" id="attune-title">A Fuller Sensory Pass</p>
+              </div>
+              <button class="tool-btn" onclick="shufflePractice('attune')">🔀 New practice</button>
+            </div>
             <div class="walk-widget" data-widget="attune">
               <p class="walk-count" id="attune-count">1 of 6</p>
               <p class="walk-prompt" id="attune-prompt"></p>
-              <div class="walk-controls">
+              <div class="walk-controls" id="attune-controls">
                 <button class="walk-btn" id="attune-back" onclick="walkStep('attune',-1)">Back</button>
                 <button class="walk-btn primary" id="attune-next" onclick="walkStep('attune',1)">Next</button>
               </div>
+              <div class="write-box" id="attune-write" style="display:none;">
+                <textarea id="attune-write-text" placeholder="Notice what's actually here right now, and put it in your own words…"></textarea>
+                <div class="write-box-actions">
+                  <button class="walk-btn" onclick="closeWriteIn('attune')">Done</button>
+                </div>
+              </div>
             </div>
-            <p class="practice-footnote">This moves slower and wider than a typical five-senses check-in — the aim isn't to name things quickly, but to actually feel each one before moving on. Interoceptive attention like this is associated with better emotion regulation.</p>
+            <div class="practice-tools">
+              <button class="tool-btn" onclick="openWriteIn('attune')">✎ Write your own</button>
+            </div>
+            <p class="practice-footnote" id="attune-footnote"></p>
           </div>
         </div>
       </div>
@@ -769,17 +847,31 @@
         <button class="step-cta" onclick="toggleStep(null,'proceed-panel')">Learn the practice</button>
         <div class="practice-panel" id="proceed-panel">
           <div class="practice-inner">
-            <p class="practice-label">Practice</p>
-            <p class="practice-title">The Felt-Sense Check</p>
+            <div class="practice-header">
+              <div>
+                <p class="practice-label">Practice</p>
+                <p class="practice-title" id="proceed-title">The Felt-Sense Check</p>
+              </div>
+              <button class="tool-btn" onclick="shufflePractice('proceed')">🔀 New practice</button>
+            </div>
             <div class="walk-widget" data-widget="proceed">
               <p class="walk-count" id="proceed-count">1 of 5</p>
               <p class="walk-prompt" id="proceed-prompt"></p>
-              <div class="walk-controls">
+              <div class="walk-controls" id="proceed-controls">
                 <button class="walk-btn" id="proceed-back" onclick="walkStep('proceed',-1)">Back</button>
                 <button class="walk-btn primary" id="proceed-next" onclick="walkStep('proceed',1)">Next</button>
               </div>
+              <div class="write-box" id="proceed-write" style="display:none;">
+                <textarea id="proceed-write-text" placeholder="Name what you're noticing, or what you want to do next, in your own words…"></textarea>
+                <div class="write-box-actions">
+                  <button class="walk-btn" onclick="closeWriteIn('proceed')">Done</button>
+                </div>
+              </div>
             </div>
-            <p class="practice-footnote">Adapted from Eugene Gendlin's Focusing method — asking the body for a "felt sense" of a decision before the mind argues for it. Studied for decades as a way of accessing implicit, pre-verbal knowing.</p>
+            <div class="practice-tools">
+              <button class="tool-btn" onclick="openWriteIn('proceed')">✎ Write your own</button>
+            </div>
+            <p class="practice-footnote" id="proceed-footnote"></p>
           </div>
         </div>
       </div>
@@ -799,7 +891,7 @@
       </div>
       <div class="app-col">
         <h3>As a daily practice</h3>
-        <p>Ground in the body and the space around you. Attune without naming what you find. Proceed by moving fluidly with life — not toward the habitual escape.</p>
+        <p>Ground in the body and the space around you. Attune and see clearly what is here. Proceed by moving fluidly with life — not toward the habitual escape.</p>
       </div>
     </div>
     <div class="app-divider"></div>
@@ -809,7 +901,7 @@
 
 <!-- CLOSE / CTA -->
 <section id="close-cta">
-  <p class="close-line reveal">Three words. One doorway. Come back to it as often as you need — there is no version of this you can get wrong.</p>
+  <p class="close-line reveal">Three words. One doorway. Come back to it as often as you need — the clarity you're looking for already lives inside you. Each return just helps you meet it more fully.</p>
   <button class="close-btn reveal reveal-delay-1" onclick="openOverlay('moreModal')">Explore more practice</button>
 </section>
 
@@ -992,9 +1084,103 @@
     }
   });
 
-  /* ── Ground: three-part breath animation ── */
+  /* ─────────────────────────────────────────────
+     GROUND — rotating breath-based practices
+     ───────────────────────────────────────────── */
+  var groundPractices = [
+    {
+      title: 'The Three-Part Breath',
+      phases: [
+        { cue: 'Inhale through the nose…', cls: 'inhale', dur: 1800 },
+        { cue: 'Inhale again — fill up completely…', cls: 'hold', dur: 700 },
+        { cue: 'Let it all go through an open mouth…', cls: 'exhale', dur: 2700 }
+      ],
+      rounds: 5,
+      steps: [
+        'Two inhales through the nose — the first fills the belly and chest, the second tops you off completely. No pause between them.',
+        'One long, open-mouth exhale — let the breath fall out entirely, with a sigh if it wants one.',
+        'Repeat for five to eight rounds, or until something in the body visibly settles.'
+      ],
+      footnote: 'The double inhale is borrowed from the "physiological sigh," shown to lower arousal faster than a single slow breath by more fully re-inflating collapsed lung tissue before the release.'
+    },
+    {
+      title: 'Box Breathing',
+      phases: [
+        { cue: 'Inhale through the nose for four…', cls: 'inhale', dur: 4000 },
+        { cue: 'Hold gently for four…', cls: 'hold', dur: 4000 },
+        { cue: 'Exhale through the nose for four…', cls: 'exhale', dur: 4000 },
+        { cue: 'Hold empty for four…', cls: 'exhale', dur: 4000 }
+      ],
+      rounds: 4,
+      steps: [
+        'Inhale through the nose for a count of four.',
+        'Hold gently for a count of four.',
+        'Exhale through the nose for a count of four, then hold empty for four before the next round.'
+      ],
+      footnote: 'Used widely in clinical anxiety protocols and by high-stress professions to down-regulate the nervous system through slow, even-paced breathing.'
+    },
+    {
+      title: 'Extended Exhale',
+      phases: [
+        { cue: 'Inhale through the nose for four…', cls: 'inhale', dur: 4000 },
+        { cue: 'Exhale slowly for eight…', cls: 'exhale', dur: 8000 }
+      ],
+      rounds: 5,
+      steps: [
+        'Inhale through the nose for a count of four.',
+        'Exhale slowly through the nose or mouth for a count of eight — about twice as long as the inhale.',
+        'If eight feels like a stretch, start smaller (four in, six out) and lengthen the exhale over time.'
+      ],
+      footnote: 'Lengthening the exhale relative to the inhale is thought to shift the balance toward parasympathetic, "rest and digest" activity in the nervous system.'
+    },
+    {
+      title: 'Humming Breath',
+      phases: [
+        { cue: 'Inhale gently through the nose…', cls: 'inhale', dur: 2000 },
+        { cue: 'Hum softly as you exhale…', cls: 'exhale', dur: 3500 }
+      ],
+      rounds: 6,
+      steps: [
+        'Inhale gently through the nose.',
+        'As you exhale, hum softly with a closed mouth — like a low "mmm."',
+        'Let the vibration settle in the chest, throat, or face. Repeat for six rounds or more.'
+      ],
+      footnote: 'Inspired by Bhramari (humming bee) pranayama; the vibration is associated with increased vagal tone and a fast sense of calm.'
+    },
+    {
+      title: 'Feet & Floor',
+      phases: [
+        { cue: 'Press your feet — or seat — into what\'s beneath you…', cls: 'inhale', dur: 4000 },
+        { cue: 'Feel the ground meeting you, holding you up…', cls: 'exhale', dur: 4000 }
+      ],
+      rounds: 3,
+      steps: [
+        'Notice your feet, or your seat, making contact with the floor or chair beneath you.',
+        'Press down gently and feel what presses back.',
+        'Let that contact be the whole practice — no counting required, just weight and support.'
+      ],
+      footnote: 'A simple proprioceptive anchor — using pressure and contact with a stable surface to signal safety to the nervous system.'
+    }
+  ];
+  var currentGround = groundPractices[0];
+
+  function renderGround(practice) {
+    currentGround = practice;
+    document.getElementById('ground-title').textContent = practice.title;
+    document.getElementById('ground-steps').innerHTML = practice.steps.map(function (s, i) {
+      return '<li><span class="num">' + (i + 1) + '</span> ' + s + '</li>';
+    }).join('');
+    document.getElementById('ground-footnote').textContent = practice.footnote;
+    document.getElementById('breathCue').textContent = 'Press begin when ready';
+    document.getElementById('breathCount').textContent = '0 of ' + practice.rounds + ' rounds';
+    document.getElementById('breathCircle').className = 'breath-circle';
+    var btn = document.getElementById('breathBtn');
+    btn.disabled = false;
+    btn.textContent = 'Begin';
+    breathRunning = false;
+  }
+
   var breathRunning = false;
-  var breathRoundsTarget = 5;
   function startBreathing() {
     if (breathRunning) return;
     breathRunning = true;
@@ -1005,60 +1191,153 @@
     btn.disabled = true;
     btn.textContent = 'In progress…';
     var round = 0;
+    var practice = currentGround;
 
     function doRound() {
-      if (round >= breathRoundsTarget) {
+      if (round >= practice.rounds) {
         cue.textContent = 'Well done. Rest here as long as you like.';
-        count.textContent = breathRoundsTarget + ' of ' + breathRoundsTarget + ' rounds';
+        count.textContent = practice.rounds + ' of ' + practice.rounds + ' rounds';
         btn.disabled = false;
         btn.textContent = 'Begin again';
         breathRunning = false;
         return;
       }
       round++;
-      count.textContent = round + ' of ' + breathRoundsTarget + ' rounds';
+      count.textContent = round + ' of ' + practice.rounds + ' rounds';
 
-      cue.textContent = 'Inhale through the nose…';
-      circle.className = 'breath-circle inhale';
-
-      setTimeout(function () {
-        cue.textContent = 'Inhale again — fill up completely…';
-        circle.className = 'breath-circle hold';
-      }, 1800);
-
-      setTimeout(function () {
-        cue.textContent = 'Let it all go through an open mouth…';
-        circle.className = 'breath-circle exhale';
-      }, 2500);
-
-      setTimeout(doRound, 5200);
+      var elapsed = 0;
+      practice.phases.forEach(function (phase) {
+        setTimeout(function () {
+          cue.textContent = phase.cue;
+          circle.className = 'breath-circle ' + phase.cls;
+        }, elapsed);
+        elapsed += phase.dur;
+      });
+      setTimeout(doRound, elapsed);
     }
     doRound();
   }
 
-  /* ── Attune / Proceed step-through widgets ── */
-  var walkData = {
-    attune: [
-      "Notice what you can see right now — not naming objects quickly, but letting your eyes actually land and rest on one or two things.",
-      "Notice what you can hear — the nearest sound, then the farthest one you can find.",
-      "Notice a texture within reach — the chair, the floor, your own hands. Let yourself actually feel it.",
-      "Notice your feet or seat making contact with the ground beneath you.",
-      "Notice your breath, without changing it — just where you feel it moving.",
-      "Notice one sensation inside the body — tightness, warmth, ease, heaviness — and simply let it be information, not a problem to solve."
-    ],
-    proceed: [
-      "Bring the decision or situation to mind, lightly — not analyzing it, just letting it be present.",
-      "Ask the body, not the mind: where do I feel this? Chest, stomach, throat, shoulders — wherever it shows up.",
-      "Stay with that sensation for a few breaths without rushing to interpret it. Let it shift or clarify on its own.",
-      "Ask quietly: what does this part of me actually want? Let the answer come as a felt sense, not a sentence.",
-      "From whatever settled or became clearer, take one small, concrete next step — the smallest honest action available."
-    ]
-  };
+  /* ─────────────────────────────────────────────
+     ATTUNE & PROCEED — rotating step-through practices
+     ───────────────────────────────────────────── */
+  var attunePractices = [
+    {
+      title: 'A Fuller Sensory Pass',
+      footnote: 'This moves slower and wider than a typical five-senses check-in — the aim isn\'t to name things quickly, but to actually feel each one before moving on. Interoceptive attention like this is associated with better emotion regulation.',
+      prompts: [
+        'Notice what you can see right now — not naming objects quickly, but letting your eyes actually land and rest on one or two things.',
+        'Notice what you can hear — the nearest sound, then the farthest one you can find.',
+        'Notice a texture within reach — the chair, the floor, your own hands. Let yourself actually feel it.',
+        'Notice your feet or seat making contact with the ground beneath you.',
+        'Notice your breath, without changing it — just where you feel it moving.',
+        'Notice one sensation inside the body — tightness, warmth, ease, heaviness — and simply let it be information, not a problem to solve.'
+      ]
+    },
+    {
+      title: '5-4-3-2-1 Grounding Scan',
+      footnote: 'A classic grounding sequence used in anxiety and trauma-informed care to interrupt spiraling thought by re-anchoring attention in the senses.',
+      prompts: [
+        'Find five things you can see — let your eyes move slowly, resting briefly on each one.',
+        'Notice four things you can hear, from nearest to farthest.',
+        'Notice three things you can feel — fabric, temperature, the surface beneath you.',
+        'Notice two things you can smell, or two scents you remember.',
+        'Notice one thing you can taste, even faintly — or simply the inside of your mouth.'
+      ]
+    },
+    {
+      title: 'Body Weather Check',
+      footnote: 'A single-pass check-in, useful when time is short — treating the body\'s state as information rather than a problem.',
+      prompts: [
+        'Ask: what is the weather like in my body right now? Stormy, still, foggy, clear?',
+        'Notice where that "weather" is strongest — chest, stomach, jaw, shoulders.',
+        'Let it be exactly as it is for a few breaths, without trying to change it.',
+        'Notice if naming it shifts anything at all — it doesn\'t have to.'
+      ]
+    },
+    {
+      title: 'Sound Mapping',
+      footnote: 'Orienting to sound is a fast, portable way to interrupt rumination and return attention to the present environment.',
+      prompts: [
+        'Notice the closest sound to you right now.',
+        'Let your attention move outward to a sound further away.',
+        'Try to catch the space between sounds — the brief quiet.',
+        'Return your attention to your breath, carrying that spaciousness with you.'
+      ]
+    },
+    {
+      title: 'Open Awareness Pause',
+      footnote: 'Adapted from choiceless awareness practice — resting attention without a fixed anchor.',
+      prompts: [
+        'Let your attention rest without choosing a focus — simply notice whatever arises.',
+        'If something takes over — a sound, a thought, a sensation — let it have its moment.',
+        'Notice how experience keeps moving and changing on its own.',
+        'When you\'re ready, gently let your attention settle back on the breath.'
+      ]
+    }
+  ];
+
+  var proceedPractices = [
+    {
+      title: 'The Felt-Sense Check',
+      footnote: 'Adapted from Eugene Gendlin\'s Focusing method — asking the body for a "felt sense" of a decision before the mind argues for it. Studied for decades as a way of accessing implicit, pre-verbal knowing.',
+      prompts: [
+        'Bring the decision or situation to mind, lightly — not analyzing it, just letting it be present.',
+        'Ask the body, not the mind: where do I feel this? Chest, stomach, throat, shoulders — wherever it shows up.',
+        'Stay with that sensation for a few breaths without rushing to interpret it. Let it shift or clarify on its own.',
+        'Ask quietly: what does this part of me actually want? Let the answer come as a felt sense, not a sentence.',
+        'From whatever settled or became clearer, take one small, concrete next step — the smallest honest action available.'
+      ]
+    },
+    {
+      title: 'Next Right Action',
+      footnote: 'Drawn from Acceptance and Commitment Therapy — action guided by values rather than the urge to escape discomfort.',
+      prompts: [
+        'Let the situation be present without needing to solve it all at once.',
+        'Ask: what matters to me here, underneath the noise?',
+        'Ask: what is the smallest next step that moves toward that, rather than away from the discomfort?',
+        'Notice if the mind offers a bigger, more dramatic step — and gently return to the smallest honest one.',
+        'Take that one step, or simply name it, and let the rest wait.'
+      ]
+    },
+    {
+      title: 'Values Compass Check',
+      footnote: 'A brief values-clarification pause, useful before choices that pull in several directions at once.',
+      prompts: [
+        'Bring the choice to mind lightly.',
+        'Ask: which option moves me toward the person I want to be?',
+        'Notice any option that\'s really about avoiding fear, guilt, or discomfort — and set it aside for a moment.',
+        'Choose the direction that fits your values, even if it isn\'t the easiest one.'
+      ]
+    },
+    {
+      title: 'Body Yes / No Check',
+      footnote: 'A simple body-based decision check, useful when the mind is going in circles.',
+      prompts: [
+        'Bring one option to mind. Notice any shift in the body — opening, ease, lightness, or closing, tightness, heaviness.',
+        'Now bring the other option to mind and notice the same.',
+        'Without over-analyzing, notice which one the body leaned toward.',
+        'Let that lean inform your decision — it doesn\'t have to be the whole answer, just one honest data point.'
+      ]
+    },
+    {
+      title: 'Pause · Name · Choose',
+      footnote: 'A short form of RAIN (Recognize, Allow, Investigate, Nurture), adapted for in-the-moment decisions.',
+      prompts: [
+        'Pause completely, even for three breaths, before reacting.',
+        'Name what\'s happening in one honest phrase — "I\'m rushing," "I\'m afraid," "I\'m annoyed."',
+        'Ask what response would actually help, rather than what impulse is loudest.',
+        'Choose that response, as best you can, and let it be enough.'
+      ]
+    }
+  ];
+
+  var currentPractice = { attune: attunePractices[0], proceed: proceedPractices[0] };
   var walkIndex = { attune: 0, proceed: 0 };
 
   function renderWalk(key) {
     var i = walkIndex[key];
-    var data = walkData[key];
+    var data = currentPractice[key].prompts;
     document.getElementById(key + '-prompt').textContent = data[i];
     document.getElementById(key + '-count').textContent = (i + 1) + ' of ' + data.length;
     document.getElementById(key + '-back').disabled = (i === 0);
@@ -1067,7 +1346,7 @@
   }
 
   function walkStep(key, dir) {
-    var data = walkData[key];
+    var data = currentPractice[key].prompts;
     if (dir === 1 && walkIndex[key] === data.length - 1) {
       walkIndex[key] = 0;
     } else {
@@ -1076,6 +1355,38 @@
     renderWalk(key);
   }
 
+  function shufflePractice(key) {
+    if (key === 'ground') {
+      var groundChoices = groundPractices.filter(function (p) { return p !== currentGround; });
+      renderGround(groundChoices[Math.floor(Math.random() * groundChoices.length)]);
+      return;
+    }
+    var arr = key === 'attune' ? attunePractices : proceedPractices;
+    var choices = arr.filter(function (p) { return p !== currentPractice[key]; });
+    var next = choices[Math.floor(Math.random() * choices.length)];
+    currentPractice[key] = next;
+    walkIndex[key] = 0;
+    document.getElementById(key + '-title').textContent = next.title;
+    document.getElementById(key + '-footnote').textContent = next.footnote;
+    closeWriteIn(key);
+    renderWalk(key);
+  }
+
+  /* ── Write your own ── */
+  function openWriteIn(key) {
+    document.getElementById(key + '-controls').style.display = 'none';
+    document.getElementById(key + '-write').style.display = 'block';
+    document.getElementById(key + '-write-text').focus();
+  }
+  function closeWriteIn(key) {
+    document.getElementById(key + '-write').style.display = 'none';
+    document.getElementById(key + '-controls').style.display = 'flex';
+  }
+
+  /* ── Initial render ── */
+  renderGround(groundPractices[0]);
+  document.getElementById('attune-footnote').textContent = attunePractices[0].footnote;
+  document.getElementById('proceed-footnote').textContent = proceedPractices[0].footnote;
   renderWalk('attune');
   renderWalk('proceed');
 </script>
