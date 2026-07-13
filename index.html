@@ -523,6 +523,11 @@
     padding-top: 2rem;
   }
 
+  #application .eyebrow {
+    font-size: 0.74rem;
+    margin-bottom: 1.4rem;
+  }
+
   .app-card {
     background: var(--card);
     border-left: 3px solid var(--moss);
@@ -674,17 +679,29 @@
     padding: 1.1rem 0.2rem;
     font-family: Georgia, serif;
   }
+  .accordion-title-wrap {
+    display: flex;
+    align-items: baseline;
+    flex: 1;
+    min-width: 0;
+  }
   .accordion-num {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 0.7rem;
     color: var(--clay);
     letter-spacing: 0.1em;
     margin-right: 0.7rem;
+    flex-shrink: 0;
   }
   .accordion-title {
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--moss-deep);
+    flex: 1;
+    min-width: 0;
+  }
+  .accordion-title.culminating {
+    color: #b5502a;
   }
   .accordion-plus {
     font-size: 1.1rem;
@@ -753,7 +770,7 @@
   <p class="eyebrow">A practice for meeting life</p>
   <h1 class="hero-title">G.A.P<span class="dot">.</span></h1>
   <p class="hero-sub">Ground. Attune. Proceed.</p>
-  <p class="hero-body">One practice, three ways in — for the moments that call for a decision, and the ones that simply ask to be met. Come as you are; the practice already knows how to meet you there.</p>
+  <p class="hero-body">One practice, three ways in — for the <strong>moments</strong> that call for a decision, and the ones that simply ask to be met. Come as you are; the practice knows how to meet you there.</p>
 </section>
 
 <!-- PRACTICE PATH -->
@@ -801,13 +818,13 @@
                 New practice
               </button>
             </div>
+            <ul class="practice-steps" id="ground-steps"></ul>
             <div class="breath-widget">
               <div class="breath-circle" id="breathCircle"></div>
               <p class="breath-cue" id="breathCue">Press begin when ready</p>
               <p class="breath-count" id="breathCount">0 of 5 rounds</p>
               <button class="breath-btn" id="breathBtn" onclick="startBreathing()">Begin</button>
             </div>
-            <ul class="practice-steps" id="ground-steps"></ul>
             <p class="practice-footnote" id="ground-footnote"></p>
           </div>
         </div>
@@ -922,7 +939,7 @@
 
 <!-- CLOSE / CTA -->
 <section id="close-cta">
-  <p class="close-line reveal">Three words. One doorway. Come back to it as often as you need — the clarity you're looking for already lives inside you. Each return just helps you meet it more fully.</p>
+  <p class="close-line reveal">Three words. One doorway. Come back to G.A.P as often as you need. The space and clarity you're looking for already lives inside you. Each return helps you meet it more fully.</p>
   <button class="close-btn reveal reveal-delay-1" onclick="openOverlay('moreModal')">Explore more practice</button>
 </section>
 
@@ -958,7 +975,7 @@
 
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-2')">
-        <span><span class="accordion-num">02</span><span class="accordion-title">Somatic Awareness — Body Scan</span></span>
+        <span class="accordion-title-wrap"><span class="accordion-num">02</span><span class="accordion-title">Somatic Awareness — Body Scan</span></span>
         <span class="accordion-plus">+</span>
       </button>
       <div class="accordion-panel" id="acc-2">
@@ -1015,19 +1032,19 @@
 
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-5')">
-        <span><span class="accordion-num">05</span><span class="accordion-title">Living It Harmoniously</span></span>
+        <span><span class="accordion-num">05</span><span class="accordion-title culminating">Living It Harmoniously</span></span>
         <span class="accordion-plus">+</span>
       </button>
       <div class="accordion-panel" id="acc-5">
         <div class="accordion-panel-inner">
-          <p>How Attune and Proceed become one continuous motion, rather than two separate steps.</p>
+          <p>How Attune and Proceed become one continuous motion, rather than two separate steps — anchored by an internal bell you build over time.</p>
           <ol>
-            <li>Set a few natural check-in points in your day — before opening your laptop, at a stoplight, before a meal.</li>
-            <li>At each, take one physiological sigh and notice one thing in the body or the room.</li>
-            <li>Let whatever you do next simply follow from that — no analysis required.</li>
-            <li>Over time this collapses Ground, Attune, and Proceed into a single felt movement, rather than three distinct stops.</li>
+            <li>Choose a few everyday moments to serve as your bell — opening your laptop, starting to cook dinner, feeling traffic tighten around you.</li>
+            <li>Let that moment ring like a bell: a brief signal to pause, take one physiological sigh, and notice one thing in the body or the room.</li>
+            <li>Ground and arrive — let yourself actually land in yourself and your surroundings before doing anything else.</li>
+            <li>Then proceed, letting whatever comes next follow from that arrival — moving fluidly with life rather than reacting on autopilot.</li>
           </ol>
-          <p>This is the long-run aim of the framework — not a technique you perform, but a way of meeting each moment that becomes more automatic with repetition.</p>
+          <p>With repetition, the bell rings on its own — collapsing Ground, Attune, and Proceed into a single felt movement rather than three distinct stops.</p>
         </div>
       </div>
     </div>
