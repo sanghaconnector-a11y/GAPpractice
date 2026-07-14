@@ -417,12 +417,16 @@
 
   .breath-cue {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: 0.98rem;
+    letter-spacing: 0.05em;
+    text-transform: none;
     color: var(--moss-deep);
-    min-height: 1.2em;
+    min-height: 2.6em;
+    max-width: 320px;
+    line-height: 1.55;
     text-align: center;
+    opacity: 1;
+    transition: opacity 0.4s ease;
   }
   .breath-count {
     font-size: 0.72rem;
@@ -1037,7 +1041,7 @@
       </button>
       <div class="accordion-panel" id="acc-5">
         <div class="accordion-panel-inner">
-          <p>How Attune and Proceed become one continuous motion, rather than two separate steps — anchored by an internal bell you build over time.</p>
+          <p>How G.A.P becomes one continuous motion, rather than separate steps — anchored by an internal bell you build over time.</p>
           <ol>
             <li>Choose a few everyday moments to serve as your bell — opening your laptop, starting to cook dinner, feeling traffic tighten around you.</li>
             <li>Let that moment ring like a bell: a brief signal to pause, take one physiological sigh, and notice one thing in the body or the room.</li>
@@ -1248,8 +1252,12 @@
       var elapsed = 0;
       practice.phases.forEach(function (phase) {
         setTimeout(function () {
-          cue.textContent = phase.cue;
-          circle.className = 'breath-circle ' + phase.cls;
+          cue.style.opacity = '0';
+          setTimeout(function () {
+            cue.textContent = phase.cue;
+            circle.className = 'breath-circle ' + phase.cls;
+            cue.style.opacity = '1';
+          }, 180);
         }, elapsed);
         elapsed += phase.dur;
       });
