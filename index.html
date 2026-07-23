@@ -19,7 +19,7 @@
     --clay:        #a8703f;
     --clay-soft:   #c08a5c;
     --charcoal:    #2c2820;
-    --stone:       #8c8270;
+    --stone:       #6f6656;
     --line:        #d4c9ac;
     --sage-line:   #9fae8f;
   }
@@ -41,6 +41,37 @@
 
   .sans {
     font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--moss);
+    color: var(--parchment);
+    padding: 0.7rem 1.1rem;
+    z-index: 999;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+  .skip-link:focus {
+    left: 0.6rem;
+    top: 0.6rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 2px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 
   /* ── NAV ── */
@@ -70,7 +101,7 @@
     font-size: 0.78rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--sage-line);
+    color: #6a7d5f;
     font-weight: 700;
     background: none;
     border: none;
@@ -133,14 +164,14 @@
   .hero-sub {
     font-size: clamp(1.3rem, 3vw, 1.9rem);
     font-style: italic;
-    color: var(--stone);
+    color: #5f5748;
     margin-bottom: 1.8rem;
   }
 
   .hero-body {
     font-size: 1.06rem;
     max-width: 560px;
-    opacity: 0.86;
+    opacity: 0.9;
     line-height: 1.85;
     margin-bottom: 1rem;
   }
@@ -206,7 +237,7 @@
   .path-intro {
     font-size: 1rem;
     font-style: italic;
-    color: var(--stone);
+    color: #5f5748;
     max-width: 600px;
     margin: 1.2rem 0 3.5rem;
     line-height: 1.75;
@@ -269,9 +300,18 @@
   .step-lede {
     font-size: 0.98rem;
     max-width: 560px;
-    opacity: 0.85;
+    opacity: 0.9;
     margin-top: 0.7rem;
     line-height: 1.8;
+  }
+
+  .step-example {
+    font-size: 0.8rem;
+    font-style: italic;
+    max-width: 480px;
+    color: #5f5748;
+    margin-top: 0.35rem;
+    line-height: 1.6;
   }
 
   .step-cta {
@@ -306,7 +346,7 @@
     overflow: hidden;
     transition: max-height 0.45s ease;
   }
-  .practice-panel.open { max-height: 1800px; }
+  .practice-panel.open { max-height: 2000px; }
 
   .practice-inner {
     background: var(--card);
@@ -382,7 +422,7 @@
     gap: 0.8rem;
     font-size: 0.94rem;
     line-height: 1.7;
-    opacity: 0.9;
+    opacity: 0.95;
   }
   .practice-steps .num {
     flex-shrink: 0;
@@ -403,7 +443,7 @@
   .practice-footnote {
     font-size: 0.82rem;
     font-style: italic;
-    color: var(--stone);
+    color: #5f5748;
     border-top: 1px solid var(--line);
     padding-top: 0.9rem;
   }
@@ -431,6 +471,15 @@
   .breath-circle.hold    { transform: scale(1.05); transition-duration: 0.4s; }
   .breath-circle.exhale  { transform: scale(0.62); transition-duration: 2.4s; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .breath-circle,
+    .breath-circle.inhale,
+    .breath-circle.hold,
+    .breath-circle.exhale {
+      transition-duration: 0.15s;
+    }
+  }
+
   .breath-cue {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 0.98rem;
@@ -446,8 +495,12 @@
   }
   .breath-count {
     font-size: 0.72rem;
-    color: var(--stone);
+    color: #5f5748;
     font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .breath-controls {
+    display: flex;
+    gap: 0.7rem;
   }
   .breath-btn {
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -464,6 +517,13 @@
   }
   .breath-btn:hover { background: var(--moss-deep); }
   .breath-btn:disabled { opacity: 0.5; cursor: default; }
+  .breath-btn.stop {
+    background: none;
+    border: 1px solid var(--clay);
+    color: var(--clay);
+  }
+  .breath-btn.stop:hover { background: var(--clay); color: var(--parchment); }
+  .breath-btn.stop:disabled { display: none; }
 
   /* Attune / Proceed step-through widget */
   .walk-widget {
@@ -571,7 +631,7 @@
   }
   .app-col p {
     font-size: 0.93rem;
-    opacity: 0.86;
+    opacity: 0.9;
     line-height: 1.75;
   }
   .app-divider {
@@ -582,7 +642,7 @@
     font-size: 0.95rem;
     font-style: italic;
     color: var(--moss-deep);
-    opacity: 0.85;
+    opacity: 0.9;
     text-align: center;
   }
 
@@ -600,7 +660,7 @@
   .close-line {
     font-size: clamp(1.1rem, 2.4vw, 1.4rem);
     font-style: italic;
-    color: var(--stone);
+    color: #5f5748;
     max-width: 480px;
     margin: 0 auto 2rem;
     line-height: 1.7;
@@ -628,7 +688,7 @@
     padding: 2.2rem 2rem;
     font-size: 0.75rem;
     letter-spacing: 0.1em;
-    color: var(--stone);
+    color: #5f5748;
     border-top: 1px solid var(--line);
     font-family: 'Helvetica Neue', Arial, sans-serif;
   }
@@ -670,7 +730,7 @@
     border: none;
     font-size: 1.4rem;
     cursor: pointer;
-    color: var(--stone);
+    color: #5f5748;
     line-height: 1;
   }
   .modal-close:hover { color: var(--charcoal); }
@@ -683,7 +743,7 @@
   .modal-sub {
     font-size: 0.85rem;
     font-style: italic;
-    color: var(--stone);
+    color: #5f5748;
     margin-bottom: 1.8rem;
   }
 
@@ -746,7 +806,7 @@
   .accordion-panel-inner {
     padding: 0 0.2rem 1.3rem 2.2rem;
     font-size: 0.92rem;
-    opacity: 0.87;
+    opacity: 0.92;
     line-height: 1.8;
   }
   .accordion-panel-inner ol,
@@ -765,7 +825,6 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
     .hero-ring { animation: none; opacity: 0.15; }
-    .breath-circle { transition: none; }
   }
 
   @media (max-width: 640px) {
@@ -779,6 +838,8 @@
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#path">Skip to practice</a>
 
 <nav id="mainNav">
   <button class="nav-about" onclick="openOverlay('aboutModal')">About</button>
@@ -830,13 +891,14 @@
           <span class="step-gloss">the still point</span>
         </button>
         <p class="step-lede">Unhooking from thought and emotion. Cultivating a sense of being where you are — rooted, peaceful and present.</p>
-        <button class="step-cta" onclick="toggleStep(null,'ground-panel')">Learn the practice</button>
+        <button class="step-cta" aria-expanded="false" onclick="toggleStep(this,'ground-panel')">Learn the practice</button>
         <div class="practice-panel" id="ground-panel">
           <div class="practice-inner">
             <div class="practice-header">
               <div>
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="ground-title">The Three-Part Breath</p>
+                <p class="step-example">ie. one minute before opening your laptop to grade papers.</p>
               </div>
               <button class="tool-btn" onclick="shufflePractice('ground')">
                 <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
@@ -845,10 +907,13 @@
             </div>
             <ul class="practice-steps" id="ground-steps"></ul>
             <div class="breath-widget">
-              <div class="breath-circle" id="breathCircle"></div>
-              <p class="breath-cue" id="breathCue">Press begin when ready</p>
-              <p class="breath-count" id="breathCount">0 of 5 rounds</p>
-              <button class="breath-btn" id="breathBtn" onclick="startBreathing()">Begin</button>
+              <div class="breath-circle" id="breathCircle" aria-hidden="true"></div>
+              <p class="breath-cue" id="breathCue" role="status" aria-live="polite">Press begin when ready</p>
+              <p class="breath-count" id="breathCount" aria-live="off">0 of 5 rounds</p>
+              <div class="breath-controls">
+                <button class="breath-btn" id="breathBtn" onclick="startBreathing()">Begin</button>
+                <button class="breath-btn stop" id="breathStopBtn" onclick="stopBreathing()" disabled>Stop</button>
+              </div>
             </div>
             <p class="practice-footnote" id="ground-footnote"></p>
           </div>
@@ -862,13 +927,14 @@
           <span class="step-gloss">the felt sense</span>
         </button>
         <p class="step-lede">Turning toward the body and the space around you, without analyzing — as sources of information and connection.</p>
-        <button class="step-cta" onclick="toggleStep(null,'attune-panel')">Learn the practice</button>
+        <button class="step-cta" aria-expanded="false" onclick="toggleStep(this,'attune-panel')">Learn the practice</button>
         <div class="practice-panel" id="attune-panel">
           <div class="practice-inner">
             <div class="practice-header">
               <div>
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="attune-title">A Fuller Sensory Pass</p>
+                <p class="step-example">ie. scanning the room before responding to a tense email.</p>
               </div>
               <button class="tool-btn" onclick="shufflePractice('attune')">
                 <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
@@ -877,7 +943,7 @@
             </div>
             <div class="walk-widget" data-widget="attune">
               <p class="walk-count" id="attune-count">1 of 6</p>
-              <p class="walk-prompt" id="attune-prompt"></p>
+              <p class="walk-prompt" id="attune-prompt" role="status" aria-live="polite"></p>
               <div class="walk-controls" id="attune-controls">
                 <button class="walk-btn" id="attune-back" onclick="walkStep('attune',-1)">Back</button>
                 <button class="walk-btn primary" id="attune-next" onclick="walkStep('attune',1)">Next</button>
@@ -904,13 +970,14 @@
           <span class="step-gloss">the response</span>
         </button>
         <p class="step-lede">Acting and moving fluidly with life — from the wisdom recognized in Ground and Attune, not the mind's habitual reflex.</p>
-        <button class="step-cta" onclick="toggleStep(null,'proceed-panel')">Learn the practice</button>
+        <button class="step-cta" aria-expanded="false" onclick="toggleStep(this,'proceed-panel')">Learn the practice</button>
         <div class="practice-panel" id="proceed-panel">
           <div class="practice-inner">
             <div class="practice-header">
               <div>
                 <p class="practice-label">Practice</p>
                 <p class="practice-title" id="proceed-title">The Felt-Sense Check</p>
+                <p class="step-example">ie. choosing what to say next after the pause, not the first reaction.</p>
               </div>
               <button class="tool-btn" onclick="shufflePractice('proceed')">
                 <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.8 5.2A6.5 6.5 0 1 0 16.5 10"/><path d="M16.5 2.8v3.8h-3.8"/></svg>
@@ -919,7 +986,7 @@
             </div>
             <div class="walk-widget" data-widget="proceed">
               <p class="walk-count" id="proceed-count">1 of 5</p>
-              <p class="walk-prompt" id="proceed-prompt"></p>
+              <p class="walk-prompt" id="proceed-prompt" role="status" aria-live="polite"></p>
               <div class="walk-controls" id="proceed-controls">
                 <button class="walk-btn" id="proceed-back" onclick="walkStep('proceed',-1)">Back</button>
                 <button class="walk-btn primary" id="proceed-next" onclick="walkStep('proceed',1)">Next</button>
@@ -973,28 +1040,28 @@
 </footer>
 
 <!-- MODAL: ABOUT -->
-<div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-label="About">
+<div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle">
   <div class="modal">
     <button class="modal-close" onclick="closeOverlay('aboutModal')" aria-label="Close">×</button>
-    <h2>About</h2>
+    <h2 id="aboutModalTitle">About</h2>
     <p class="modal-sub">Where this practice comes from</p>
-    <p style="font-size:0.95rem; line-height:1.85; opacity:0.88;">
-      G  A  P draws on a long line of teachers and traditions — Tara Brach's RAIN, the STOP technique, Eugene Gendlin's Focusing, Alan Marlatt's urge surfing, and contemplative teachers such as Adyashanti, Pema Chödrön, and Thich Nhat Hanh. This method distills broad wisdom into one simple doorway.
+    <p style="font-size:0.95rem; line-height:1.85; opacity:0.92;">
+      G  A  P draws on a long line of teachers and traditions — Tara Brach's RAIN, the STOP technique, Eugene Gendlin's Focusing, Alan Marlatt's urge surfing, and contemplative teachers such as Adyashanti, Pema Chödrön, and Thich Nhat Hanh. This method distills broad wisdom into one simple doorway. It is offered as a self-guided practice, not a substitute for therapy or medical care.
     </p>
   </div>
 </div>
 
 <!-- MODAL: MORE PRACTICE -->
-<div class="modal-overlay" id="moreModal" role="dialog" aria-modal="true" aria-label="More Practice">
+<div class="modal-overlay" id="moreModal" role="dialog" aria-modal="true" aria-labelledby="moreModalTitle">
   <div class="modal">
     <button class="modal-close" onclick="closeOverlay('moreModal')" aria-label="Close">×</button>
-    <h2>More Practice</h2>
+    <h2 id="moreModalTitle">More Practice</h2>
     <p class="modal-sub">Five ways to deepen what Ground, Attune, and Proceed already point toward.</p>
 
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-1')">
         <span><span class="accordion-num">01</span><span class="accordion-title">Mindfulness Meditation</span></span>
-        <span class="accordion-plus">+</span>
+        <span class="accordion-plus" aria-hidden="true">+</span>
       </button>
       <div class="accordion-panel" id="acc-1">
         <div class="accordion-panel-inner">
@@ -1005,7 +1072,7 @@
             <li>When the mind wanders, simply notice "thinking" and return to the anchor. This is the whole practice, not a failure of it.</li>
             <li>Begin with five minutes. Let the duration grow on its own.</li>
           </ol>
-          <p>This is the same attentional training studied in mindfulness-based stress reduction (MBSR), with consistent evidence for reducing rumination and reactivity over time.</p>
+          <p>The same training used in mindfulness-based stress reduction (MBSR), shown to ease anxiety and rumination (Goyal et al., 2014).</p>
         </div>
       </div>
     </div>
@@ -1013,7 +1080,7 @@
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-2')">
         <span class="accordion-title-wrap"><span class="accordion-num">02</span><span class="accordion-title">Somatic Awareness — Body Scan</span></span>
-        <span class="accordion-plus">+</span>
+        <span class="accordion-plus" aria-hidden="true">+</span>
       </button>
       <div class="accordion-panel" id="acc-2">
         <div class="accordion-panel-inner">
@@ -1032,7 +1099,7 @@
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-3')">
         <span><span class="accordion-num">03</span><span class="accordion-title">Box Breathing</span></span>
-        <span class="accordion-plus">+</span>
+        <span class="accordion-plus" aria-hidden="true">+</span>
       </button>
       <div class="accordion-panel" id="acc-3">
         <div class="accordion-panel-inner">
@@ -1043,7 +1110,7 @@
             <li>Exhale through the nose for a count of four.</li>
             <li>Hold empty for a count of four. Repeat for four to eight rounds.</li>
           </ol>
-          <p>Used widely in clinical anxiety protocols and by high-stress professions to down-regulate the nervous system through slow, even-paced breathing.</p>
+          <p>An even breath pattern used clinically to calm the nervous system (Zaccaro et al., 2018).</p>
         </div>
       </div>
     </div>
@@ -1051,7 +1118,7 @@
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-4')">
         <span><span class="accordion-num">04</span><span class="accordion-title">Personal Inquiry Practice</span></span>
-        <span class="accordion-plus">+</span>
+        <span class="accordion-plus" aria-hidden="true">+</span>
       </button>
       <div class="accordion-panel" id="acc-4">
         <div class="accordion-panel-inner">
@@ -1062,7 +1129,7 @@
             <li>Ask: who or how would I be without this thought?</li>
             <li>Let the inquiry stay open. Insight here tends to arrive sideways, not on command.</li>
           </ol>
-          <p>This draws on contemplative self-inquiry traditions and cognitive defusion work — loosening identification with a thought without needing to argue it away.</p>
+          <p>Draws on self-inquiry and cognitive defusion, a core tool in Acceptance and Commitment Therapy (Hayes, Strosahl, & Wilson, 2011).</p>
         </div>
       </div>
     </div>
@@ -1070,7 +1137,7 @@
     <div class="accordion-item">
       <button class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this,'acc-5')">
         <span><span class="accordion-num">05</span><span class="accordion-title culminating">Living It Harmoniously</span></span>
-        <span class="accordion-plus">+</span>
+        <span class="accordion-plus" aria-hidden="true">+</span>
       </button>
       <div class="accordion-panel" id="acc-5">
         <div class="accordion-panel-inner">
@@ -1118,6 +1185,9 @@
     step.querySelectorAll('.step-trigger, .step-cta').forEach(function (el) {
       el.setAttribute('aria-expanded', String(nowOpen));
     });
+    if (!nowOpen && panelId === 'ground-panel') {
+      stopBreathing();
+    }
     if (nowOpen) {
       setTimeout(function () {
         panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1133,21 +1203,54 @@
     trigger.setAttribute('aria-expanded', String(!isOpen));
   }
 
-  /* ── Modal open/close ── */
+  /* ── Modal open/close with focus trap ── */
+  var lastFocusedEl = null;
+
+  function getFocusable(container) {
+    return Array.prototype.slice.call(
+      container.querySelectorAll('button, [href], textarea, input, select, [tabindex]:not([tabindex="-1"])')
+    ).filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+  }
+
+  function trapFocus(e, modalEl) {
+    if (e.key !== 'Tab') return;
+    var focusable = getFocusable(modalEl);
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   function openOverlay(id) {
+    lastFocusedEl = document.activeElement;
     var el = document.getElementById(id);
     el.classList.add('open');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(function () {
       requestAnimationFrame(function () { el.classList.add('visible'); });
     });
+    var modalEl = el.querySelector('.modal');
+    setTimeout(function () {
+      var closeBtn = modalEl.querySelector('.modal-close');
+      if (closeBtn) closeBtn.focus();
+    }, 260);
+    el._trapHandler = function (e) { trapFocus(e, modalEl); };
+    el.addEventListener('keydown', el._trapHandler);
   }
   function closeOverlay(id) {
     var el = document.getElementById(id);
     el.classList.remove('visible');
+    if (el._trapHandler) el.removeEventListener('keydown', el._trapHandler);
     setTimeout(function () {
       el.classList.remove('open');
       document.body.style.overflow = '';
+      if (lastFocusedEl) lastFocusedEl.focus();
     }, 250);
   }
   document.getElementById('moreModal').addEventListener('click', function (e) {
@@ -1185,7 +1288,7 @@
         'Open mouth exhale — let it all go at once, with a sigh if it wants one.',
         'Release — rest empty for a moment before the circle begins the next round.'
       ],
-      footnote: 'The double inhale is borrowed from the "physiological sigh," shown to lower arousal faster than a single slow breath by more fully re-inflating collapsed lung tissue before the release.'
+      footnote: 'The double inhale is a "physiological sigh" — shown to calm the body faster than one slow breath (Balban et al., 2023).'
     },
     {
       title: 'Box Breathing',
@@ -1201,7 +1304,7 @@
         'Hold gently for a count of four.',
         'Exhale through the nose for a count of four, then hold empty for four before the next round.'
       ],
-      footnote: 'Used widely in clinical anxiety protocols and by high-stress professions to down-regulate the nervous system through slow, even-paced breathing.'
+      footnote: 'An even breath pattern used clinically to calm the nervous system (Zaccaro et al., 2018).'
     },
     {
       title: 'Extended Exhale',
@@ -1215,7 +1318,7 @@
         'Exhale slowly through the nose or mouth for a count of eight — about twice as long as the inhale.',
         'If eight feels like a stretch, start smaller (four in, six out) and lengthen the exhale over time.'
       ],
-      footnote: 'Lengthening the exhale relative to the inhale is thought to shift the balance toward parasympathetic, "rest and digest" activity in the nervous system.'
+      footnote: 'A longer exhale slows the heart and settles the body (Zaccaro et al., 2018).'
     },
     {
       title: 'Humming Breath',
@@ -1229,7 +1332,7 @@
         'As you exhale, hum softly with a closed mouth — like a low "mmm."',
         'Let the vibration settle in the chest, throat, or face. Repeat for six rounds or more.'
       ],
-      footnote: 'Inspired by Bhramari (humming bee) pranayama; the vibration is associated with increased vagal tone and a fast sense of calm.'
+      footnote: 'A hum-on-exhale technique (Bhramari pranayama) linked to a calmer nervous system (Novaes et al., 2020).'
     },
     {
       title: 'Feet & Floor',
@@ -1243,7 +1346,7 @@
         'Press down gently and feel what presses back.',
         'Let that contact be the whole practice — no counting required, just weight and support.'
       ],
-      footnote: 'A simple proprioceptive anchor — using pressure and contact with a stable surface to signal safety to the nervous system.'
+      footnote: 'A physical anchor — contact with a stable surface — common in trauma-informed grounding work.'
     }
   ];
   var currentGround = groundPractices[0];
@@ -1261,28 +1364,54 @@
     var btn = document.getElementById('breathBtn');
     btn.disabled = false;
     btn.textContent = 'Begin';
+    document.getElementById('breathStopBtn').disabled = true;
     breathRunning = false;
   }
 
   var breathRunning = false;
+  var breathTimers = [];
+
+  function clearBreathTimers() {
+    breathTimers.forEach(function (id) { clearTimeout(id); });
+    breathTimers = [];
+  }
+
+  function stopBreathing() {
+    if (!breathRunning) return;
+    clearBreathTimers();
+    breathRunning = false;
+    var btn = document.getElementById('breathBtn');
+    var circle = document.getElementById('breathCircle');
+    var cue = document.getElementById('breathCue');
+    btn.disabled = false;
+    btn.textContent = 'Begin';
+    document.getElementById('breathStopBtn').disabled = true;
+    circle.className = 'breath-circle';
+    cue.textContent = 'Stopped. Press begin whenever you\'re ready to try again.';
+  }
+
   function startBreathing() {
     if (breathRunning) return;
     breathRunning = true;
     var btn = document.getElementById('breathBtn');
+    var stopBtn = document.getElementById('breathStopBtn');
     var circle = document.getElementById('breathCircle');
     var cue = document.getElementById('breathCue');
     var count = document.getElementById('breathCount');
     btn.disabled = true;
     btn.textContent = 'In progress…';
+    stopBtn.disabled = false;
     var round = 0;
     var practice = currentGround;
 
     function doRound() {
+      if (!breathRunning) return;
       if (round >= practice.rounds) {
         cue.textContent = 'Well done. Rest here as long as you like.';
         count.textContent = practice.rounds + ' of ' + practice.rounds + ' rounds';
         btn.disabled = false;
         btn.textContent = 'Begin again';
+        stopBtn.disabled = true;
         breathRunning = false;
         return;
       }
@@ -1291,17 +1420,20 @@
 
       var elapsed = 0;
       practice.phases.forEach(function (phase) {
-        setTimeout(function () {
+        var t1 = setTimeout(function () {
           cue.style.opacity = '0';
-          setTimeout(function () {
+          var t2 = setTimeout(function () {
             cue.textContent = phase.cue;
             circle.className = 'breath-circle ' + phase.cls;
             cue.style.opacity = '1';
           }, 180);
+          breathTimers.push(t2);
         }, elapsed);
+        breathTimers.push(t1);
         elapsed += phase.dur;
       });
-      setTimeout(doRound, elapsed);
+      var t3 = setTimeout(doRound, elapsed);
+      breathTimers.push(t3);
     }
     doRound();
   }
@@ -1312,7 +1444,7 @@
   var attunePractices = [
     {
       title: 'A Fuller Sensory Pass',
-      footnote: 'This moves slower and wider than a typical five-senses check-in — the aim isn\'t to name things quickly, but to actually feel each one before moving on. Interoceptive attention like this is associated with better emotion regulation.',
+      footnote: 'Slower than a typical senses check-in — sustained bodily attention is linked to better emotion regulation (Füstös et al., 2013).',
       prompts: [
         'Notice what you can see right now — not naming objects quickly, but letting your eyes actually land and rest on one or two things.',
         'Notice what you can hear — the nearest sound, then the farthest one you can find.',
@@ -1324,7 +1456,7 @@
     },
     {
       title: '5-4-3-2-1 Grounding Scan',
-      footnote: 'A classic grounding sequence used in anxiety and trauma-informed care to interrupt spiraling thought by re-anchoring attention in the senses.',
+      footnote: 'A widely used grounding sequence in anxiety and trauma-informed care, used to interrupt spiraling thought by re-anchoring attention in the senses.',
       prompts: [
         'Find five things you can see — let your eyes move slowly, resting briefly on each one.',
         'Notice four things you can hear, from nearest to farthest.',
@@ -1368,7 +1500,7 @@
   var proceedPractices = [
     {
       title: 'The Traffic Light Reset',
-      footnote: 'Adapted from the STOP technique used across mindfulness-based programs to interrupt automatic reactivity before it turns into action, paired with the physiological sigh for faster down-regulation.',
+      footnote: 'Adapted from the STOP technique, paired with the physiological sigh for faster calm (Balban et al., 2023).',
       prompts: [
         'Notice the pull to react — the sigh, the tensed shoulders, the urge to hurry the moment along.',
         'Stop, even for one breath, rather than following that pull automatically.',
@@ -1379,7 +1511,7 @@
     },
     {
       title: 'Urge Surfing',
-      footnote: 'Drawn from Alan Marlatt\'s urge-surfing technique in relapse-prevention research, extended here to any reactive impulse — treating urges as waves that rise, crest, and pass rather than commands to obey.',
+      footnote: 'From Marlatt\'s urge-surfing work — urges treated as waves that rise and pass, not commands (Bowen & Marlatt, 2009).',
       prompts: [
         'Notice the urge to react — to snap, to honk, to sigh loudly, to rush.',
         'Name it simply: "this is an urge," without yet deciding whether to act on it.',
@@ -1390,7 +1522,7 @@
     },
     {
       title: 'RAIN for Everyday Friction',
-      footnote: 'RAIN (Recognize, Allow, Investigate, Nurture), popularized by Tara Brach, applied here to small daily frictions — a slow line, heavy traffic — rather than larger decisions.',
+      footnote: 'RAIN — Recognize, Allow, Investigate, Nurture (McDonald; popularized by Brach) — applied here to small daily friction.',
       prompts: [
         'Recognize what\'s happening — "I\'m getting impatient," "I\'m annoyed," "I\'m rushing."',
         'Allow it to be here, without needing to fix or suppress it right away.',
@@ -1401,7 +1533,7 @@
     },
     {
       title: 'The Felt-Sense Check',
-      footnote: 'Adapted from Eugene Gendlin\'s Focusing method — asking the body for a "felt sense" of a decision before the mind argues for it. Studied for decades as a way of accessing implicit, pre-verbal knowing.',
+      footnote: 'From Gendlin\'s Focusing method — asking the body for a "felt sense" before the mind argues (Gendlin, 1978).',
       prompts: [
         'Bring the decision or situation to mind, lightly — not analyzing it, just letting it be present.',
         'Ask the body, not the mind: where do I feel this? Chest, stomach, throat, shoulders — wherever it shows up.',
@@ -1412,7 +1544,7 @@
     },
     {
       title: 'Values Compass Check',
-      footnote: 'A brief values-clarification pause, useful before choices that pull in several directions at once.',
+      footnote: 'A values-clarification pause from Acceptance and Commitment Therapy (Hayes, Strosahl, & Wilson, 2011).',
       prompts: [
         'Bring the choice to mind lightly.',
         'Ask: which option moves me toward the person I want to be?',
